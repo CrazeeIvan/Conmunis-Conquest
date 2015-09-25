@@ -8,12 +8,12 @@
  */
  
 /* RESOURCES
- * 1. http://gamedev.tutsplus.com/tutorials/implementation/object-pools-help-you-reduce-lag-in-resource-intensive-games/
- * 2. http://gameprogrammingpatterns.com/object-pool.html
- * 3. http://www.slideshare.net/ernesto.jimenez/5-tips-for-your-html5-games
- * 4. http://www.kontain.com/fi/entries/94636/ (quote on performace)
- * 5. http://code.bytespider.eu/post/21438674255/dirty-rectangles
- * 6. http://www.html5rocks.com/en/tutorials/canvas/performance/
+ * 1. ciaranmaher@gmail.com
+ * 2. conmunisconquest@gmail.com
+ * 3. 
+ * 4. 
+ * 5. 
+ * 6. 
  */
 
 	
@@ -108,13 +108,15 @@ function Background() {
 	// Implement abstract function
 	this.draw = function() {
 		// Pan background
-	//	this.y += this.speed;
+		// ToDo: Come back and fix parallax movement, so background canvas moves as player does, this will give the impression of transition through space.
+		//this.y += this.ship.speed;
 		this.context.drawImage(imageRepository.background, this.x, this.y);
 		
 		// Draw another image at the top edge of the first image
 		this.context.drawImage(imageRepository.background, this.x, this.y - this.canvasHeight);
 
 		// If the image scrolled off the screen, reset
+		// ToDo: expand this to reset the background canvas if the player flies off any side of the screen.
 		if (this.y >= this.canvasHeight)
 			this.y = 0;
 	};
@@ -326,7 +328,7 @@ function Asteroid (){
 	 * Sets the Asteroids values
 	 */
 	
-	this.spawn = function (x, y, speed, loot){
+	this.spawn = function (x, y, speed){
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
@@ -477,6 +479,7 @@ function animate() {
 	game.background.draw();
 	game.ship.move();
 	game.ship.bulletPool.animate(); 
+	game.asteroidPool.animate();
 }
 
 
