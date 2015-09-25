@@ -3,3 +3,18 @@ attacks asteroids
 produces resources
 builds fighters
 enemies attack
+
+player
+	attack
+	gather
+	build
+NPC asteroids
+	collision
+fighters
+	attack
+	defend
+	collision
+enemies
+	attack
+	move
+	collision
