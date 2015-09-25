@@ -1,15 +1,27 @@
-hero unit
+mother-ship unit
 attacks asteroids
 produces resources
 builds fighters
 enemies attack
 
+parallax
+	MovementRelativeToCurrentShip
+	asteroidArray
+	enemyArray
+camera/pov
+	currentShip
+	allConnectedShips
+	FogOfWar
+radar
+	currentShip
+	allConnectedShips
 player
 	attack
 	gather
 	build
 NPC asteroids
 	collision
+	Loot
 fighters
 	attack
 	defend
@@ -18,3 +30,14 @@ enemies
 	attack
 	move
 	collision
+	Loot
+
+ToDo:
+Parallax function
+Asteroid function
+Fighter function
+Enemy function
+radar function
+FogOfWar function
+Camera function
+Ship function

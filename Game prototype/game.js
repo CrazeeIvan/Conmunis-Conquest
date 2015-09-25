@@ -38,9 +38,10 @@ var imageRepository = new function() {
 	this.background = new Image();
 	this.spaceship = new Image();
 	this.bullet = new Image();
+	this.asteroid = new Image();
 
 	// Ensure all images have loaded before starting the game
-	var numImages = 3;
+	var numImages = 4;
 	var numLoaded = 0;
 	function imageLoaded() {
 		numLoaded++;
@@ -57,11 +58,15 @@ var imageRepository = new function() {
 	this.bullet.onload = function() {
 		imageLoaded();
 	}
+	this.asteroid.onload = function(){
+		imageLoaded();
+	}
 	
 	// Set images src
 	this.background.src = "imgs/bg.png";
 	this.spaceship.src = "imgs/ship.png";
 	this.bullet.src = "imgs/bullet.png";
+	this.asteroid.src = "imgs/asteroid.png"
 }
 
 
@@ -103,7 +108,7 @@ function Background() {
 	// Implement abstract function
 	this.draw = function() {
 		// Pan background
-		this.y += this.speed;
+	//	this.y += this.speed;
 		this.context.drawImage(imageRepository.background, this.x, this.y);
 		
 		// Draw another image at the top edge of the first image
@@ -286,8 +291,8 @@ function Ship() {
 					this.x = this.canvasWidth - this.width;
 			} else if (KEY_STATUS.up) {
 				this.y -= this.speed
-				if (this.y <= this.canvasHeight/4*3)
-					this.y = this.canvasHeight/4*3;
+				if (this.y <= 0)
+					this.y = 0;
 			} else if (KEY_STATUS.down) {
 				this.y += this.speed
 				if (this.y >= this.canvasHeight - this.height)
@@ -312,6 +317,65 @@ function Ship() {
 	};
 }
 Ship.prototype = new Drawable();
+
+function Asteroid (){
+	var chance =0;
+	this.alive = false;
+	
+	/*
+	 * Sets the Asteroids values
+	 */
+	
+	this.spawn = function (x, y, speed, loot){
+		this.x = x;
+		this.y = y;
+		this.speed = speed;
+		this.speedX = 0;
+		this.speedY = speed;
+		this.alive = true;
+		this.leftEdge = this.x - 90;
+		this.rightEdge = this.x + 90;
+		this.bottomEdge = this.y + 140;
+	}
+	
+	/*
+	 * Move the Asteroid
+	 */
+	this.draw = function() {
+		this.context.clearRect(this.x-1, this.y, this.width+1, this.height);
+		this.x += this.speedX;
+		this.y += this.speedY;
+		if (this.x <= this.leftEdge) {
+			this.speedX = this.speed;
+		}
+		else if (this.x >= this.rightEdge + this.width) {
+			this.speedX = -this.speed;
+		}
+		else if (this.y >= this.bottomEdge) {
+			this.speed = 1.5;
+			this.speedY = 0;
+			this.y -= 5;
+			this.speedX = -this.speed;
+		}
+		
+		this.context.drawImage(imageRepository.asteroid, this.x, this.y);
+	
+		
+	};
+	/*
+	 * Resets the Asteroid values
+	 */
+	this.clear = function() {
+		this.x = 0;
+		this.y = 0;
+		this.speed = 0;
+		this.speedX = 0;
+		this.speedY = 0;
+		this.alive = false;
+	};
+}
+Asteroid.prototype = new Drawable();
+
 
 
  /**
@@ -353,6 +417,10 @@ function Game() {
 			Bullet.prototype.canvasWidth = this.mainCanvas.width;
 			Bullet.prototype.canvasHeight = this.mainCanvas.height;
 			
+			Asteroid.prototype.context = this.mainContext;
+			Asteroid.prototype.canvasWidth = this.mainCanvas.width;
+			Asteroid.prototype.canvasHeight = this.mainCanvas.height;
+			
 			// Initialize the background object
 			this.background = new Background();
 			this.background.init(0,0); // Set draw point to 0,0
@@ -365,6 +433,25 @@ function Game() {
 			this.ship.init(shipStartX, shipStartY, imageRepository.spaceship.width,
 			               imageRepository.spaceship.height);
 
+					
+			// Initialize the asteroid pool object
+			this.asteroidPool = new Pool(30);
+			this.asteroidPool.init("asteroid");
+			var height = imageRepository.asteroid.height;
+			var width = imageRepository.asteroid.width;
+			var x = 100;
+			var y = -height;
+			var spacer = y * 1.5;
+			for (var i = 1; i <= 18; i++) {
+				this.asteroidPool.get(x,y,2);
+				x += width + 25;
+				if (i % 6 == 0) {
+					x = 100;
+					y += spacer
+				}
+			}
+					
+						   
 			return true;
 		} else {
 			return false;
