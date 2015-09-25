@@ -1,0 +1,5 @@
+hero unit
+attacks asteroids
+produces resources
+builds fighters
+enemies attack
