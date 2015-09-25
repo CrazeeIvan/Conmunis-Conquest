@@ -129,9 +129,9 @@ Background.prototype = new Drawable();
  * Creates the Bullet object which the ship fires. The bullets are
  * drawn on the "main" canvas.
  */
-function Bullet() {	
+function Bullet(object) {	
 	this.alive = false; // Is true if the bullet is currently in use
-	
+	var self = object;
 	/*
 	 * Sets the bullet values
 	 */
@@ -151,11 +151,21 @@ function Bullet() {
 	this.draw = function() {
 		this.context.clearRect(this.x, this.y, this.width, this.height);
 		this.y -= this.speed;
-		if (this.y <= 0 - this.height) {
+		if (self === "bullet" && this.y <= 0 - this.height) {
 			return true;
 		}
+		/*else if (self === "enemyBullet" && this.y >= this.canvasHeight) {
+			return true;
+		}*/
 		else {
-			this.context.drawImage(imageRepository.bullet, this.x, this.y);
+			if (self === "bullet") {
+				this.context.drawImage(imageRepository.bullet, this.x, this.y);
+			}
+/*			else if (self === "enemyBullet") {
+				this.context.drawImage(imageRepository.enemyBullet, this.x, this.y);
+			}*/
+			
+			return false;
 		}
 	};
 	
@@ -201,14 +211,23 @@ function Pool(maxSize) {
 	/*
 	 * Populates the pool array with Bullet objects
 	 */
-	this.init = function() {
-		for (var i = 0; i < size; i++) {
-			// Initalize the bullet object
-			var bullet = new Bullet();
-			bullet.init(0,0, imageRepository.bullet.width,
-			            imageRepository.bullet.height);
-			pool[i] = bullet;
+	this.init = function(object) {
+		if (object == "bullet") {
+			for (var i = 0; i < size; i++) {
+				// Initalize the object
+				var bullet = new Bullet("bullet");
+				bullet.init(0,0, imageRepository.bullet.width, imageRepository.bullet.height);
+				pool[i] = bullet;
+			}
 		}
+		else if (object == "asteroid") {
+			for (var i = 0; i < size; i++) {
+				var asteroid = new Asteroid();
+				asteroid.init(0,0, imageRepository.asteroid.width, imageRepository.asteroid.height);
+				pool[i] = asteroid;
+			}
+		}
+		
 	};
 	
 	/*
@@ -263,7 +282,7 @@ function Pool(maxSize) {
 function Ship() {
 	this.speed = 3;
 	this.bulletPool = new Pool(30);
-	this.bulletPool.init();
+	this.bulletPool.init("bullet");
 
 	var fireRate = 15;
 	var counter = 0;
@@ -287,15 +306,18 @@ function Ship() {
 				this.x -= this.speed
 				if (this.x <= 0) // Keep player within the screen
 					this.x = 0;
-			} else if (KEY_STATUS.right) {
+			}
+			if (KEY_STATUS.right) {
 				this.x += this.speed
 				if (this.x >= this.canvasWidth - this.width)
 					this.x = this.canvasWidth - this.width;
-			} else if (KEY_STATUS.up) {
+			}
+			if (KEY_STATUS.up) {
 				this.y -= this.speed
 				if (this.y <= 0)
 					this.y = 0;
-			} else if (KEY_STATUS.down) {
+			}
+			if (KEY_STATUS.down) {
 				this.y += this.speed
 				if (this.y >= this.canvasHeight - this.height)
 					this.y = this.canvasHeight - this.height;
