@@ -308,8 +308,7 @@ function Ship() {
 	 * Fires two bullets
 	 */
 	this.fire = function() {
-		this.bulletPool.getTwo(this.x+6, this.y, 3,
-		                       this.x+33, this.y, 3);
+		this.bulletPool.get(this.x+6, this.y, 3);
 	};
 }
 Ship.prototype = new Drawable();
