@@ -20,6 +20,8 @@ player
 	gather
 	build
 NPC asteroids
+	pathing
+		random paths?
 	collision
 	Loot
 fighters

@@ -1,6 +1,6 @@
 /***************
- * PART TWO - Create the player controlled ship and it's
- * properties (move and shoot)
+ * Conmunis Conquest game Prototype v0.3
+ * 
  ***************/
 
 /* NOTES TO REMEMBER
@@ -300,7 +300,7 @@ function Ship() {
 			this.context.clearRect(this.x, this.y, this.width, this.height);
 			
 			// Update x and y according to the direction to move and
-			// redraw the ship. Change the else if's to if statements
+			// redraw the ship. Change the if to else if's statements
 			// to have diagonal movement.
 			if (KEY_STATUS.left) {
 				this.x -= this.speed
@@ -314,7 +314,7 @@ function Ship() {
 			}
 			if (KEY_STATUS.up) {
 				this.y -= this.speed
-				if (this.y <= 0)
+				if (this.y <= 0) // Keep player within the screen
 					this.y = 0;
 			}
 			if (KEY_STATUS.down) {
@@ -359,6 +359,7 @@ function Asteroid (){
 		this.alive = true;
 		this.leftEdge = this.x - 90;
 		this.rightEdge = this.x + 90;
+		this.topEdge = this.y - 140;
 		this.bottomEdge = this.y + 140;
 	}
 	
