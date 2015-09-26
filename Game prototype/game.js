@@ -517,6 +517,28 @@ function animate() {
 	game.asteroidPool.animate();
 }
 
+function detectionCollision(x1, y1, width1, height1, x2, y2, width2, height2){
+var rect1 {x: x1, y: y2, width: width1, height: height1}
+var rect2 {x: x2, y: y2, width: width2, height: height2}
+var i, j, lenA;, lenB
+
+if (rect1.x < rect2.x + rect2.width &&
+   rect1.x + rect1.width > rect2.x &&
+   rect1.y < rect2.y + rect2.height &&
+   rect1.height + rect1.y > rect2.y) {
+    // collision detected!
+	// isColliding =true;
+}
+	for (i=0;lenA = asteroidPool.length;i<lenA; ++i){
+		for (j=0;lenB=bulletPool.length;j<lenB;++j){
+			var boundingA {asteroidPool[i].x, asteroidPool[i].y, asteroidPool[i].width, asteroidPool[i].height}
+			var boundingB {bulletPool[j].x, bulletPool[j].y, bulletPool[j].width, bulletPool[j].height}
+			if ()
+		}
+		
+	}
+};
+
 
 // The keycodes that will be mapped when a user presses a button.
 // Original code by Doug McInnes
