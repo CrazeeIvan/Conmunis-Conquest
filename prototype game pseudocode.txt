@@ -18,6 +18,11 @@ radar
 player
 	attack
 	gather
+		collision with loots
+	collision
+		with asteroids
+		with enemies
+		with enemy bullet list
 	build
 NPC asteroids
 	pathing
@@ -28,11 +33,19 @@ fighters
 	attack
 	defend
 	collision
+	fire
 enemies
 	attack
 	move
 	collision
+	fire
 	Loot
+
+if (playerBullet intersects with asteroid.boundingbox) then
+	play destruction animation
+	clear asteroid
+	drop loot if possible
+	
 
 ToDo:
 Parallax function

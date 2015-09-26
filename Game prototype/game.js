@@ -97,8 +97,8 @@ function Drawable() {
 }
 
 /**
- * Creates a random integer from min to max values, used for asteroid pathing and future changes.
- * 
+ * Creates a random integer from min to max values, 
+ * used for asteroid pathing and future changes.
  * 
  */
 
