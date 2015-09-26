@@ -476,14 +476,14 @@ function Game() {
 			this.asteroidPool.init("asteroid");
 			var height = imageRepository.asteroid.height;
 			var width = imageRepository.asteroid.width;
-			var x = 100;
+			var x = randomIntFromInterval(1,50);
 			var y = -height;
 			var spacer = y * 1.5;
 			for (var i = 1; i <= 18; i++) {
 				this.asteroidPool.get(x,y,2);
 				x += width + 25;
 				if (i % 6 == 0) {
-					x = 100;
+					x = randomIntFromInterval(1,50);
 					y += spacer
 				}
 			}
