@@ -43,3 +43,7 @@ radar function
 FogOfWar function
 Camera function
 Ship function
+
+Resources:
+http://blog.sklambert.com/html5-canvas-game-2d-collision-detection/
+https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
