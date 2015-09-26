@@ -96,6 +96,17 @@ function Drawable() {
 	};
 }
 
+/**
+ * Creates a random integer from min to max values, used for asteroid pathing and future changes.
+ * 
+ * 
+ */
+
+function randomIntFromInterval(min,max)
+{
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
 
 /**
  * Creates the Background object which will become a child of
@@ -353,7 +364,7 @@ function Asteroid (){
 	this.spawn = function (x, y, speed){
 		this.x = x;
 		this.y = y;
-		this.speed = speed;
+		this.speed = randomIntFromInterval(1,10);
 		this.speedX = 0;
 		this.speedY = speed;
 		this.alive = true;
@@ -361,6 +372,7 @@ function Asteroid (){
 		this.rightEdge = this.x + 90;
 		this.topEdge = this.y - 140;
 		this.bottomEdge = this.y + 140;
+		this.loot = true;
 	}
 	
 	/*
@@ -368,13 +380,13 @@ function Asteroid (){
 	 */
 	this.draw = function() {
 		this.context.clearRect(this.x-1, this.y, this.width+1, this.height);
-		this.x += this.speedX;
-		this.y += this.speedY;
+		this.x += randomIntFromInterval(-3,3);
+		this.y += randomIntFromInterval(-3,3);
 		if (this.x <= this.leftEdge) {
-			this.speedX = this.speed;
+			this.speedX =randomIntFromInterval(1,3);
 		}
 		else if (this.x >= this.rightEdge + this.width) {
-			this.speedX = -this.speed;
+			this.speedX = randomIntFromInterval(-3, 1)
 		}
 		else if (this.y >= this.bottomEdge) {
 			this.speed = 1.5;
